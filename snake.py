@@ -1,60 +1,57 @@
 import pygame
 import random
-import os
 
-# Initialize pygame
+# Initialisation de pygame
 pygame.init()
 
-# Define colors
-white = (255, 255, 255)
-yellow = (255, 255, 102)
-black = (0, 0, 0)
-red = (213, 50, 80)
-green = (0, 255, 0)
-blue = (50, 153, 213)
+# Définition des couleurs
+blanc = (255, 255, 255)
+noir = (0, 0, 0)
+rouge = (213, 50, 80)
+vert = (0, 255, 0)
 
-# Set up the display
-dis_width = 600
-dis_height = 400
-dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption('Snake Game')
+# Configuration de l'affichage
+largeur = 600
+hauteur = 400
+fenetre = pygame.display.set_mode((largeur, hauteur))
+pygame.display.set_caption('Jeu du Serpent')
 
-# Set up the clock
-clock = pygame.time.Clock()
+# Horloge
+horloge = pygame.time.Clock()
 
-# Set up the snake
-snake_block = 10
-snake_speed = 15
+# Paramètres du serpent
+taille_bloc = 10
+vitesse_serpent = 15
 
-# Set up the font
-font_style = pygame.font.SysFont(None, 30)
-score_font = pygame.font.SysFont(None, 25)
+# Police
+police = pygame.font.SysFont(None, 30)
+police_score = pygame.font.SysFont(None, 25)
 
-def message(msg, color):
-    mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width / 6, dis_height / 3])
+def message(msg, couleur):
+    mesg = police.render(msg, True, couleur)
+    fenetre.blit(mesg, [largeur / 6, hauteur / 3])
 
-def gameLoop():
+def jeu():
     game_over = False
     game_close = False
 
-    x1 = dis_width / 2
-    y1 = dis_height / 2
+    x_serpent = largeur / 2
+    y_serpent = hauteur / 2
 
-    x1_change = 0
-    y1_change = 0
+    x_serpent_change = 0
+    y_serpent_change = 0
 
-    snake_List = []
-    Length_of_snake = 1
+    serpent_corps = []
+    longueur_serpent = 1
 
-    foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-    foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    nourriture_x = round(random.randrange(0, largeur - taille_bloc) / 10.0) * 10.0
+    nourriture_y = round(random.randrange(0, hauteur - taille_bloc) / 10.0) * 10.0
 
     while not game_over:
 
         while game_close == True:
-            dis.fill(black)
-            message("You Lost! Press Q-Quit or C-Play Again", red)
+            fenetre.fill(noir)
+            message("Vous avez perdu ! Appuyez sur Q pour quitter ou C pour rejouer.", rouge)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -63,7 +60,7 @@ def gameLoop():
                         game_over = True
                         game_close = False
                     if event.key == pygame.K_c:
-                        gameLoop()
+                        jeu()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -72,56 +69,57 @@ def gameLoop():
                 if event.key == pygame.K_ESCAPE:
                     game_close = True
                     game_over = True
-                if event.key == pygame.K_LEFT:
-                    x1_change = -snake_block
-                    y1_change = 0
-                elif event.key == pygame.K_RIGHT:
-                    x1_change = snake_block
-                    y1_change = 0
-                elif event.key == pygame.K_UP:
-                    y1_change = -snake_block
-                    x1_change = 0
-                elif event.key == pygame.K_DOWN:
-                    y1_change = snake_block
-                    x1_change = 0
+                # Gestion des touches directionnelles
+                if event.key == pygame.K_LEFT and x_serpent_change != taille_bloc:
+                    x_serpent_change = -taille_bloc
+                    y_serpent_change = 0
+                elif event.key == pygame.K_RIGHT and x_serpent_change != -taille_bloc:
+                    x_serpent_change = taille_bloc
+                    y_serpent_change = 0
+                elif event.key == pygame.K_UP and y_serpent_change != taille_bloc:
+                    y_serpent_change = -taille_bloc
+                    x_serpent_change = 0
+                elif event.key == pygame.K_DOWN and y_serpent_change != -taille_bloc:
+                    y_serpent_change = taille_bloc
+                    x_serpent_change = 0
 
-        if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
+        if x_serpent >= largeur or x_serpent < 0 or y_serpent >= hauteur or y_serpent < 0:
             game_close = True
 
-        x1 += x1_change
-        y1 += y1_change
-        dis.fill(black)
-        pygame.draw.rect(dis, green, [foodx, foody, snake_block, snake_block])
+        x_serpent += x_serpent_change
+        y_serpent += y_serpent_change
+        fenetre.fill(noir)
+        pygame.draw.rect(fenetre, vert, [nourriture_x, nourriture_y, taille_bloc, taille_bloc])
 
-        snake_Head = []
-        snake_Head.append(x1)
-        snake_Head.append(y1)
-        snake_List.append(snake_Head)
+        tete_serpent = []
+        tete_serpent.append(x_serpent)
+        tete_serpent.append(y_serpent)
+        serpent_corps.append(tete_serpent)
 
-        if len(snake_List) > Length_of_snake:
-            del snake_List[0]
+        if len(serpent_corps) > longueur_serpent:
+            del serpent_corps[0]
 
-        for x in snake_List[:-1]:
-            if x == snake_Head:
+        for x in serpent_corps[:-1]:
+            if x == tete_serpent:
                 game_close = True
 
-        for x in snake_List:
-            pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
+        for x in serpent_corps:
+            pygame.draw.rect(fenetre, blanc, [x[0], x[1], taille_bloc, taille_bloc])
 
-        # Display score
-        score = score_font.render("Score: " + str(Length_of_snake - 1), True, yellow)
-        dis.blit(score, [0, 0])
+        # Affichage du score
+        score = police_score.render("Score: " + str(longueur_serpent - 1), True, blanc)
+        fenetre.blit(score, [0, 0])
 
         pygame.display.update()
 
-        if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-            foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
-            Length_of_snake += 1
+        if x_serpent == nourriture_x and y_serpent == nourriture_y:
+            nourriture_x = round(random.randrange(0, largeur - taille_bloc) / 10.0) * 10.0
+            nourriture_y = round(random.randrange(0, hauteur - taille_bloc) / 10.0) * 10.0
+            longueur_serpent += 1
 
-        clock.tick(snake_speed)
+        horloge.tick(vitesse_serpent)
 
     pygame.quit()
     quit()
 
-gameLoop()
+jeu()
