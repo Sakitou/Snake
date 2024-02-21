@@ -1,7 +1,7 @@
 # Snake Game
 
 This is a simple snake game implemented using HTML, CSS, and JavaScript.
-
+Check [HERE](Python/README.md) for Python version.
 ## Description
 
 The Snake Game is a classic arcade game where the player controls a snake that moves around the screen eating food and growing longer. The game ends if the snake collides with itself or the boundaries of the screen. The objective is to eat as much food as possible and achieve the highest score.
