@@ -1,49 +1,35 @@
 # Snake Game
 
-This project involves the implementation of a simple Snake game using Python's Pygame library.
+This is a simple snake game implemented using HTML, CSS, and JavaScript.
 
-## Prerequisites
+## Description
 
-Make sure you have Python installed on your system. You can install Pygame by running the following command:
+The Snake Game is a classic arcade game where the player controls a snake that moves around the screen eating food and growing longer. The game ends if the snake collides with itself or the boundaries of the screen. The objective is to eat as much food as possible and achieve the highest score.
 
-```
-pip install pygame
-```
-## Installation
-You can install the game via this command:
-
-```bash
-sudo mkdir ~/.sk-ware && cd ~/.sk-ware && git clone https://github.com/Sakitou/Snake && cd Snake && touch run-cli.sh && echo "#!/bin/bash
-python3 ~/.sk-ware/Snake/snake.py" > run-cli.sh && sudo chmod +x run-cli.sh && sudo cp run-cli.sh /usr/local/bin/snakit && touch snake.desktop && echo "[Desktop Entry]
-Type=Application
-Name=Snake
-Exec=~/.sk-ware/Snake/run-cli.sh
-Icon=~/.sk-ware/Snake/icon.png" >> snake.desktop && cp snake.desktop ~/.local/share/applications/ && echo "Finish !"
-```
 ## How to Play
 
-Run the `snake.py` script to start the game.
-
-Controls:
-- Use the arrow keys to move the snake.
-- Press 'Q' to quit the game at any time.
-- Upon losing, you can press 'C' to replay.
+1. Open the `index.html` file in a web browser.
+2. Control the snake using the arrow keys (← ↑ → ↓) on your keyboard.
+3. Eat the food (green squares) to grow longer.
+4. Avoid colliding with the snake's own body or the screen boundaries.
 
 ## Features
 
-- The snake grows each time it eats food.
-- The game ends if the snake hits the edges of the screen or if it bites its own tail.
+- Responsive design that adapts to different screen sizes.
+- Score display to keep track of the player's progress.
+- Collision detection to handle snake collisions with itself or the screen boundaries.
+- Random placement of food on the screen.
 
-## Code Structure
+## Files
 
-- The `game()` function contains the main logic of the game.
-- The `message()` function displays messages on the screen.
-- Game parameters are configured at the beginning of the script.
-- Pygame events are handled to detect snake movements and player actions.
-- The position of the food is randomized upon each appearance.
+- `index.html`: Main HTML file containing the game canvas and script reference.
+- `style.css`: CSS file for styling the game layout.
+- `script.js`: JavaScript file containing the game logic.
 
 ## Credits
 
-This game was developed by Sakitou.
+This project is inspired by the classic Snake Game and various online tutorials on HTML5 game development.
 
-Have fun playing!
+## License
+
+This project is licensed under the GNU License - see the [LICENSE](LICENSE.md) file for details.
